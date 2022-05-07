@@ -10,7 +10,7 @@
 			<form action="" method="POST">
 				{% csrf_token %}
 				<!-- {{ form.management_form }} -->
-				<div class="input-group mb-3" >Car Model: &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp;<input type="text" name = "model"><br> </div>
+				<div class="input-group mb-3" >Car Model: &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp;<input type="text" name = "model" value={{vname}} readonly ></div>
 				<hr>
 				<div class="input-group mb-3">PickUp Date: &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp;{{form.pickup_date}} </div>
 				<hr>

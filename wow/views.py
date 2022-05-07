@@ -32,7 +32,8 @@ def index(request):
 def cars(request,pk):
   pk = int(pk)
   cars = RrskVehicle.objects.all()
-  vehicles = random.choices(RrskVehicleClass.objects.raw('SELECT * FROM rrsk_vehicle_class a JOIN rrsk_vehicle b ON a.id = b.v_class_id'),k=20)
+  vehicles = random.choices(RrskVehicleClass.objects.raw('SELECT a.id, b.id as vid, b.v_make, b.v_model, a.class_name, a.daily_rate, a.daily_mileage_limit, a.over_mileage_fee FROM rrsk_vehicle_class a JOIN rrsk_vehicle b ON a.id = b.v_class_id'),k=20)
+  print(vehicles)
   context = {'vehicles':vehicles,'id':pk}
 
   return render(request,'wow/cars.html',context)
@@ -113,10 +114,14 @@ def dashboard(request, pk_test):
   return render(request, 'wow/dashboard.html',context)
 
 @login_required(login_url = 'login')
-def createOrder(request, pk):
+def createOrder(request, pk , vid):
   customer = RrskCustomers.objects.get(id=pk)
+  # print(RrskVehicle.objects.get('SELECT b.v_model FROM rrsk_vehicle b where b.id = 49'))
+  qres = RrskVehicle.objects.filter(id=vid)
+  vname = qres[0].v_model
+  print(vname)
   form = OrderFormCreate(instance=customer)
-  print("form before post",form)
+  # print("form before post",form)
   if request.method == 'POST':
     form = OrderFormCreate(request.POST)
     if form.is_valid():
@@ -130,7 +135,7 @@ def createOrder(request, pk):
       rental.save()
       return redirect('/dashboard/' + str(pk))
 
-  context = {'form':form}
+  context = {'form':form , 'vname':vname, 'vid':vid}
   return render(request, 'wow/order_form_create.html', context)
 
 
