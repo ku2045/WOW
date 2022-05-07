@@ -1,0 +1,40 @@
+{%  extends 'wow/main.html' %}
+
+{% load static %}
+
+{% block content %}
+
+{% for vehicle in vehicles %}
+<br>
+
+	<div class="row">
+<!-- 		<div class="col-md">
+			<div class="card card-body">
+			
+			<img src="{{MEDIA_URL}}{{vehicle.pic.url}}" height="305px" width="900px" />
+
+			</div>
+		</div> -->
+
+		<div class="col-md">
+			<div class="card card-body">
+				<h5>Car Information &nbsp; &nbsp; &nbsp;<a class="btn btn-sm btn-info" href="{% url 'create_order' id  %}">Book</a> <br></h5>
+				<hr>
+				<p>Manufacturer: {{vehicle.v_make}}</p>
+				<p>Model: {{vehicle.v_model}}</p>
+				<p>Vehicle ID: {{vehicle.id}}</p>
+				<p>Class: {{vehicle.class_name}}</p>
+				<p>Daily Rate: &dollar; {{vehicle.daily_rate}}</p>
+				<p>Mileage Limit: {{vehicle.daily_mileage_limit}} Miles</p>
+				<p>Over Mileage Fee: &dollar; {{vehicle.over_mileage_fee}}</p>
+			</div>
+		</div>
+	</div>
+
+
+<br>
+{% endfor %}
+
+
+
+{% endblock %}
