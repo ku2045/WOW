@@ -20,7 +20,7 @@
 				{% for items in past_orders %}
 					<tr>
 						{% if items.id not in pays %}
-						<td><a class="btn btn-sm btn-info" href="{% url 'pay_order' items.id %}">Pay</a></td>
+						<td><a class="btn btn-sm btn-info" href="{% url 'pay_order' items.id id %}">Pay</a></td>
 						{% else %}
 						<td> Paid!</td>
 						{% endif %}

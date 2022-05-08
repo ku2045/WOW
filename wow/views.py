@@ -165,7 +165,11 @@ def deleteOrder(request, pk):
   return render(request, 'wow/delete_order.html', context)
 
 @login_required(login_url = 'login')
-def payOrder(request,pk):
+def payOrder(request,pk,custid):
+  custid=int(custid)
+  discrate_query=RrskDiscount.objects.raw('select d.id,d.disc_rate from rrsk_customers c join ind_customer ic on c.id=ic.cust_id join rrsk_discount d on ic.disc_id=d.id where c.id=%s', [custid])
+  discrate=(discrate_query[0].disc_rate)*100
+  discrate=round(discrate,2)
   order = RrskInvoice.objects.get(id=pk)
   cardno = request.POST.get('cardno')
   card_type = request.POST.get('card_type')
@@ -173,7 +177,7 @@ def payOrder(request,pk):
     pay = RrskInvoicePayment(pay_amount=order.invoice_amount,pay_method =card_type, card_no = cardno,invoice_no=order)
     pay.save()
     return redirect('/dashboard/' + str(order.rental.cust.id))
-  context = {'order': order}
+  context = {'order': order, 'disc':discrate}
   return render(request, 'wow/pay_form.html',context)
 
 def logoutUser(request):

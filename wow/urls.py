@@ -16,7 +16,7 @@ urlpatterns = [
         path('create_order/<str:pk>/<str:vid>/', views.createOrder, name="create_order"),
         path('update_order/<str:pk>/', views.updateOrder, name="update_order"),
         path('delete_order/<str:pk>/', views.deleteOrder, name="delete_order"),
-        path('pay_order/<str:pk>/', views.payOrder, name="pay_order"),
+        path('pay_order/<str:pk>/<str:custid>/', views.payOrder, name="pay_order"),
         path('reset_password/', auth_views.PasswordResetView.as_view(template_name="wow/password_reset.html"), name="reset_password"),
         path('reset_password_sent/', auth_views.PasswordResetDoneView.as_view(template_name="wow/password_reset_sent.html"), name="password_reset_done"),
         path('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(template_name="wow/password_reset_form.html"), name="password_reset_confirm"),
