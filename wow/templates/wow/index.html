@@ -1,0 +1,32 @@
+{%  extends 'wow/main.html' %}
+
+{% load static %}
+
+{% block content %}
+<!-- <p>Hello</p> -->
+<br>
+
+<div class="row">
+	<div class="col-md">
+		<div class="card card-body">
+		
+		<img src="{% static '/images/rentalscars.png' %}" height="450px" width="800px" class="mx-auto d-block"/>
+
+		</div>
+	</div>
+</div>
+
+<div class="text-center">
+	<div class="col-md">
+		<div class="card card-body">
+				<a class="btn btn-lg btn-info" href="{% url 'login' %}">Login</a> <br>
+				<a class="btn btn-lg btn-info" href="{% url 'register' %}">Register</a> <br>
+		</div>
+	</div>
+</div>
+
+
+<br>
+
+
+{% endblock %}

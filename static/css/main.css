@@ -1,0 +1,26 @@
+#logo{
+	}
+
+	body{
+		background-image: url('../../static/images/background.jpg');
+		opacity:1.0;
+		background-repeat: no-repeat;
+		background-size: cover;
+	}
+
+	#total-orders{
+        background-color: #4cc7bc;
+	}
+
+
+	#orders-delivered{
+		background-color: #b67acc;
+	}
+
+	#orders-pending{
+		background-color: #d17c7c;
+	}
+
+	#payment-pending{
+		background-color: #d1ca7c;
+	}
