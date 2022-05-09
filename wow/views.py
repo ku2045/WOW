@@ -182,8 +182,17 @@ def deleteOrder(request, pk):
 @login_required(login_url = 'login')
 def payOrder(request,pk,custid):
   custid=int(custid)
-  discrate_query=RrskDiscount.objects.raw('select d.id,d.disc_rate from rrsk_customers c join ind_customer ic on c.id=ic.cust_id join rrsk_discount d on ic.disc_id=d.id where c.id=%s', [custid])
-  discrate=(discrate_query[0].disc_rate)*100
+  custtype_query=RrskCustomers.objects.raw('select id,cust_type from rrsk_customers where id=%s',[custid])
+  custtype=custtype_query[0].cust_type
+  if custtype=="I":
+    discrate_query=RrskDiscount.objects.raw('select d.id,d.disc_rate from rrsk_customers c join ind_customer ic on c.id=ic.cust_id join rrsk_discount d on ic.disc_id=d.id where c.id=%s', [custid])
+    if not discrate_query:
+      discrate=0
+    else:
+      discrate=(discrate_query[0].disc_rate)*100
+  elif custtype=="C":
+    discrate_query=RrskDiscount.objects.raw('select co.id,co.corp_discount from rrsk_customers c join corp_customer cc on c.id=cc.cust_id join rrsk_corporation co on cc.corp_id=co.id where c.id=%s', [custid])
+    discrate=(discrate_query[0].corp_discount)*100
   discrate=round(discrate,2)
   order = RrskInvoice.objects.get(id=pk)
   cardno = request.POST.get('cardno')
@@ -206,7 +215,7 @@ def logoutUser(request):
 def generate_customers(num_customers=200):
   first_names = ['John', 'James', 'Hank', 'Tim', 'Joan','Jane', 'Willy', 'Paul','Sarah', 'Bonnie', 'Will', 'Arthur','Rudy', 'Tom', 'Liza', 'Lizze', 'Rose', 'Lily', 'Amanda']
   last_names = ['Smith', 'Stevens', 'Paulson', 'Cragson', 'Mansfield','Barmaeger', 'Wolls', 'Winner', 'Idleman', 'Shaper', 'Bolt', 'Doad']
-  cities = ['New York', 'Boston', 'Philly', 'DC']
+  cities = ['New York City', 'Boston', 'Philadelphia', 'Washington DC']
 
   for i in range(num_customers):
     cust = RrskCustomers(
@@ -272,7 +281,7 @@ def generate_ind_customers():
 
 
 def generate_locations(num=5):
-  cities = ['New York', 'Boston', 'Philly', 'DC']
+  cities = ['New York City', 'Boston', 'Philadelphia', 'Washington DC']
 
   for i in range(num):
     loc = RrskLocation(
@@ -287,7 +296,7 @@ def generate_locations(num=5):
     loc.save()
 
 def generate_vehicle_classes(num=5):
-  class_name = ['Compact', 'Mid-Size', 'SUV', 'Truck', 'Limo', 'Sports']
+  class_name = ['Compact', 'Sedan', 'SUV', 'Pickup Truck', 'Limousine', 'Sports']
   for i in class_name:
     vclass = RrskVehicleClass(
       class_name = i,
@@ -298,8 +307,8 @@ def generate_vehicle_classes(num=5):
 
 
 def generate_vehicles(num=70):
-  models = ['Range Rover', 'Fielder', 'Icemaker', 'Blastmaster', 'Top-Heavy', 'Miatta', 'Oboe', 'Beatle', 'Bug', 'Land Cruiser', 'Big Bertha', '911 Turbo', 'Supercharger', 'Ace', 'MX123', 'Mandlevroch']
-  makes = ['Toyota', 'Chevy', 'Ford', 'Porche', 'Mazda', 'Volkswagen', 'Firarri']
+  models = ['Land Cruiser', 'Impala', 'Bronco', '911 Carrera', 'MX-5', 'Golf', 'F430 Italia', 'Camry', 'Tahoe', 'Expedition', 'Cayenne', 'CX-30', 'Jetta', 'Enzo', 'Tacoma', 'Camaro']
+  makes = ['Toyota', 'Chevrolet', 'Ford', 'Porsche', 'Mazda', 'Volkswagen', 'Ferarri']
   classes = RrskVehicleClass.objects.all()
   locations = RrskLocation.objects.all()
   for i in range(70):
