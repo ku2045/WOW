@@ -379,13 +379,13 @@ def adminDashboard(request, pk_test):
     invList = RrskInvoice.objects.raw('SELECT * FROM `rrsk_invoice`')
     print(vehicles)
     pk_test = int(pk_test)
-    
+
     past_orders = RrskRental.objects.filter(cust=pk_test,
                                             end_odometer__isnull=False)  # .filter(dropoff_date__lte = datetime.date(2020, 12, 17))
     if len(past_orders) > 0:
         past_orders = RrskInvoice.objects.filter(rental__cust__id=pk_test)  #
         # past_orders.refresh_from_db()
-    
+
     pays = []
     lp = RrskInvoicePayment.objects.all()
     for it in lp:
@@ -395,7 +395,15 @@ def adminDashboard(request, pk_test):
     pay_paid = RrskInvoicePayment.objects.filter(invoice_no_id__rental__cust__id=pk_test)
     delivered = len(past_orders)
     curr_orders = RrskRental.objects.filter(cust=pk_test, end_odometer__isnull=True)
-    
+
+    rental_cars = RrskVehicle.objects.filter(id__isnull=False)
+    rental_locations = RrskLocation.objects.filter(id__isnull=False)
+    rental_invoices = RrskInvoice.objects.filter(id__isnull=False)
+
+    total_cars = len(rental_cars)
+    total_locations = len(rental_locations)
+    total_invoices = len(rental_invoices)
+
     pending = len(curr_orders)
     total_orders = delivered + pending
     payment_pending = len(pay_pending)
@@ -404,7 +412,7 @@ def adminDashboard(request, pk_test):
     context = {'past_orders': past_orders, 'curr_orders': curr_orders, 'total_orders': total_orders,
                'delivered': delivered, 'pending': pending, 'id': pk_test, 'pays': pays,
                'payment_pending': payment_pending, 'payment_paid':payment_paid, 'payment_due': payment_due , "vehicles":vehicles,
-"rentalLoc":rentalLoc,"invList":invList }
+"rentalLoc":rentalLoc,"invList":invList, 'total_cars': total_cars, 'total_locations': total_locations,  'total_invoices': total_invoices }
     #context = {'past_orders': past_orders, 'curr_orders': curr_orders, 'total_orders': total_orders,
     #'delivered': delivered, 'pending': pending, 'id': pk_test, 'pays': pays
      #}
