@@ -373,6 +373,10 @@ def generate_rentals(pickup_date = None, dropoff_date = None, v=None, num=400):
 
 
 def adminDashboard(request, pk_test):
+  # vehicles, rental loc, invoices paid
+    vehicles = random.choices(RrskVehicleClass.objects.raw('SELECT a.id, b.id as vid, b.v_make, b.v_model, a.class_name, a.daily_rate, a.daily_mileage_limit, a.over_mileage_fee FROM rrsk_vehicle_class a JOIN rrsk_vehicle b ON a.id = b.v_class_id'),k=30)
+    rentalLoc = RrskLocation.objects.raw('SELECT * FROM `rrsk_location`')
+    invList = RrskInvoice.objects.raw('SELECT * FROM `rrsk_invoice`')
     pk_test = int(pk_test)
     print(pk_test)
     past_orders = RrskRental.objects.filter(cust=pk_test,
@@ -398,7 +402,8 @@ def adminDashboard(request, pk_test):
     payment_due = payment_pending - payment_paid
     context = {'past_orders': past_orders, 'curr_orders': curr_orders, 'total_orders': total_orders,
                'delivered': delivered, 'pending': pending, 'id': pk_test, 'pays': pays,
-               'payment_pending': payment_pending, 'payment_paid':payment_paid, 'payment_due': payment_due}
+               'payment_pending': payment_pending, 'payment_paid':payment_paid, 'payment_due': payment_due , "vehicles":vehicles,
+"rentalLoc":rentalLoc,"invList":invList }
     #context = {'past_orders': past_orders, 'curr_orders': curr_orders, 'total_orders': total_orders,
     #'delivered': delivered, 'pending': pending, 'id': pk_test, 'pays': pays
      #}
