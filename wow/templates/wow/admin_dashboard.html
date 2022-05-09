@@ -36,57 +36,52 @@
 	<div class="col-md-6" style="color:white">
 		<div class="row-md-6" style="color:white">
 			
-			<h5>Current Bookings</h5>
+			<h5>Rental Locations</h5>
 			<hr>
 			<div class="card card-body">
 				<!-- book ride btn was here -->
-				<a class="btn btn-primary  btn-sm btn-block" href="{% url 'cars' id %}">View Rental Cars</a>
+				<!-- <a class="btn btn-primary  btn-sm btn-block" href="{% url 'cars' id %}">View Rental Cars</a> -->
 				<table class="table table-sm">
 					<tr>
-						<th>Car Model</th>
-						<th>PickUP Date</th>
-						<th>Dropoff Date</th>
+						<th>Street</th>
+						<th>City</th>
+						<th>State</th>
+						<th>Zip</th>
+						<th>Phone number</th>
 					</tr>
 
-					{% for order in curr_orders %}
+					{% for loc in rentalLoc %}
 						<tr>
-							<td>{{order.v.v_make}} {{order.v.v_model}}</td>
-							<td>{{order.pickup_date}}</td>
-							<td>{{order.dropoff_date}}</td>
-							{% if not order.end_odometer %}
-							<td><a class="btn btn-sm btn-info" href="{% url 'update_order' order.id %}">Update</a></td>
-							<td><a class="btn btn-sm btn-danger" href="{% url 'delete_order' order.id %}">Delete</a></td>
-							{% endif %}
+							<td>{{loc.loc_street}}</td>
+							<td>{{loc.loc_city}}</td>
+							<td>{{loc.loc_state}}</td>
+							<td>{{loc.loc_zip}}</td>
+							<td>{{loc.loc_phone_no}}</td>		
 						</tr>
 					{% endfor %}
-
 			
 				</table>
 			</div>
 		</div>
-		<div class="row-md-6" style="color:white">
-			
-			<h5>Current Bookings</h5>
+		<div class="row-md-6" id="invwrapper" style="color:white">	
+			<h5>Invoices generated</h5>
 			<hr>
 			<div class="card card-body">
 				<!-- book ride btn was here -->
-				<a class="btn btn-primary  btn-sm btn-block" href="{% url 'cars' id %}">View Rental Cars</a>
 				<table class="table table-sm">
 					<tr>
-						<th>Car Model</th>
-						<th>PickUP Date</th>
-						<th>Dropoff Date</th>
+						<th>Invoice id</th>
+						<th>Date</th>
+						<th>Amount</th>
+						<th>rental id</th>
 					</tr>
 
-					{% for order in curr_orders %}
+					{% for inv in invList %}
 						<tr>
-							<td>{{order.v.v_make}} {{order.v.v_model}}</td>
-							<td>{{order.pickup_date}}</td>
-							<td>{{order.dropoff_date}}</td>
-							{% if not order.end_odometer %}
-							<td><a class="btn btn-sm btn-info" href="{% url 'update_order' order.id %}">Update</a></td>
-							<td><a class="btn btn-sm btn-danger" href="{% url 'delete_order' order.id %}">Delete</a></td>
-							{% endif %}
+							<td>{{inv.id}}</td>
+							<td>{{inv.invoice_date	}}</td>
+							<td>{{inv.invoice_amount	}}</td>
+							<td>{{inv.rental_id	 }}</td>	
 						</tr>
 					{% endfor %}
 
@@ -100,4 +95,8 @@
 
 {% endblock %}
 
+<!-- {% if not order.end_odometer %}
+							<td><a class="btn btn-sm btn-info" href="{% url 'update_order' order.id %}">Update</a></td>
+							<td><a class="btn btn-sm btn-danger" href="{% url 'delete_order' order.id %}">Delete</a></td>
+							{% endif %} -->
 <!-- <a class="btn btn-primary  btn-sm btn-block" href="{% url 'create_order' id %}">Book a Ride</a> -->
