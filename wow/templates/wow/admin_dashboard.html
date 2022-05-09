@@ -1,0 +1,70 @@
+{%  extends 'wow/main.html' %}
+
+{% block content %}
+
+{%  include 'wow/status.html' %}
+
+<br>
+
+<div class="row">
+	<div class="col-md-5" style="color:white">
+		<h5>Past Orders</h5>
+		<hr>
+		<div class="card card-body">
+			<table class="table table-sm">
+				<tr>
+					<th></th>
+					<th>Date</th>
+					<th>Amount</th>
+				</tr>
+				{% for items in past_orders %}
+					<tr>
+						{% if items.id not in pays %}
+						<td><a class="btn btn-sm btn-info" href="{% url 'pay_order' items.id id %}">Pay</a></td>
+						{% else %}
+						<td> Paid!</td>
+						{% endif %}
+						<td>{{items.invoice_date}}</td>
+						<td> &dollar; {{items.invoice_amount}}</td>
+					</tr>
+				{% endfor %}
+
+			</table>
+		</div>
+	</div>
+
+	<div class="col-md-7" style="color:white">
+		<h5>Current Bookings</h5>
+		<hr>
+		<div class="card card-body">
+			<!-- book ride btn was here -->
+			<a class="btn btn-primary  btn-sm btn-block" href="{% url 'cars' id %}">View Rental Cars</a>
+			<table class="table table-sm">
+				<tr>
+					<th>Car Model</th>
+					<th>PickUP Date</th>
+					<th>Dropoff Date</th>
+				</tr>
+
+				{% for order in curr_orders %}
+					<tr>
+						<td>{{order.v.v_make}} {{order.v.v_model}}</td>
+						<td>{{order.pickup_date}}</td>
+						<td>{{order.dropoff_date}}</td>
+						{% if not order.end_odometer %}
+						<td><a class="btn btn-sm btn-info" href="{% url 'update_order' order.id %}">Update</a></td>
+						<td><a class="btn btn-sm btn-danger" href="{% url 'delete_order' order.id %}">Delete</a></td>
+						{% endif %}
+					</tr>
+				{% endfor %}
+
+		
+			</table>
+		</div>
+	</div>
+
+</div>
+
+{% endblock %}
+
+<!-- <a class="btn btn-primary  btn-sm btn-block" href="{% url 'create_order' id %}">Book a Ride</a> -->

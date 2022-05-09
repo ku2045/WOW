@@ -50,6 +50,10 @@ def loginPage(request):
     print(us)
     if user is not None:
       login(request, user)
+      
+      if(username == "admin"):
+        return redirect('/admindashboard/'+str(us.id))
+
       return redirect('/dashboard/' + str(us.id))
     else:
       messages.info(request, 'Username OR password is incorrect')
@@ -367,6 +371,38 @@ def generate_rentals(pickup_date = None, dropoff_date = None, v=None, num=400):
                  )
       rental.save()
 
+
+def adminDashboard(request, pk_test):
+    pk_test = int(pk_test)
+    print(pk_test)
+    past_orders = RrskRental.objects.filter(cust=pk_test,
+                                            end_odometer__isnull=False)  # .filter(dropoff_date__lte = datetime.date(2020, 12, 17))
+    if len(past_orders) > 0:
+        past_orders = RrskInvoice.objects.filter(rental__cust__id=pk_test)  #
+        # past_orders.refresh_from_db()
+    print(past_orders)
+    pays = []
+    lp = RrskInvoicePayment.objects.all()
+    for it in lp:
+        print(it.invoice_no.id)
+        pays.append(int(it.invoice_no.id))
+    pay_pending = RrskInvoice.objects.filter(rental__cust__id=pk_test, id__isnull=False)
+    pay_paid = RrskInvoicePayment.objects.filter(invoice_no_id__rental__cust__id=pk_test)
+    delivered = len(past_orders)
+    curr_orders = RrskRental.objects.filter(cust=pk_test, end_odometer__isnull=True)
+    print(curr_orders)
+    pending = len(curr_orders)
+    total_orders = delivered + pending
+    payment_pending = len(pay_pending)
+    payment_paid = len(pay_paid)
+    payment_due = payment_pending - payment_paid
+    context = {'past_orders': past_orders, 'curr_orders': curr_orders, 'total_orders': total_orders,
+               'delivered': delivered, 'pending': pending, 'id': pk_test, 'pays': pays,
+               'payment_pending': payment_pending, 'payment_paid':payment_paid, 'payment_due': payment_due}
+    #context = {'past_orders': past_orders, 'curr_orders': curr_orders, 'total_orders': total_orders,
+    #'delivered': delivered, 'pending': pending, 'id': pk_test, 'pays': pays
+     #}
+    return render(request, 'wow/admin_dashboard.html', context)
 
 def generate_all(request):
   generate_corporations()

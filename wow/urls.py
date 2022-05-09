@@ -13,6 +13,7 @@ urlpatterns = [
         path('logout/', views.logoutUser, name="logout"),
         path('register/', views.registerPage, name="register"),
         path('dashboard/<str:pk_test>/', views.dashboard, name="dashboard"),
+        path('admindashboard/<str:pk_test>/', views.adminDashboard, name="admin_dashboard"),
         path('create_order/<str:pk>/<str:vid>/', views.createOrder, name="create_order"),
         path('update_order/<str:pk>/', views.updateOrder, name="update_order"),
         path('delete_order/<str:pk>/', views.deleteOrder, name="delete_order"),
