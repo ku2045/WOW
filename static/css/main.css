@@ -2,19 +2,25 @@
 	}
 
 	body{
-		background-color: #ebeff5;
+		background-image: url('../../static/images/background.jpg');
+		opacity:1.0;
+		background-repeat: no-repeat;
+		background-size: cover;
 	}
 
-
 	#total-orders{
-		background-color: #4cb4c7;
+        background-color: #4cc7bc;
 	}
 
 
 	#orders-delivered{
-		background-color: #7abecc;
+		background-color: #b67acc;
 	}
 
 	#orders-pending{
-		background-color: #7CD1C0;
+		background-color: #d17c7c;
+	}
+
+	#payment-pending{
+		background-color: #d1ca7c;
 	}
