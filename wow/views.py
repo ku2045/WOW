@@ -64,12 +64,27 @@ def loginPage(request):
 def registerPage(request):
   form = CustomerForm()
   form1 = CreateUserForm()
+  # form.fields['cust_type'].hidden = True
   if request.method == 'POST':
     form1 = CreateUserForm(request.POST)
     form = CustomerForm(request.POST)
+    
     form.id = id
     if form.is_valid() and form1.is_valid():
       customer = form.save()
+      is_corp_cust = False
+      cust_email = request.POST.dict().get('email')
+      at_index = cust_email.index("@")
+      dot_index = cust_email.index(".")
+      email_domain = cust_email[at_index+1:dot_index]
+      corpnames = RrskCorporation.objects.raw('SELECT id, LOWER(corp_name) corp_name FROM `rrsk_corporation`; ')
+      for i in range(len(corpnames)):
+        cname = corpnames[i].corp_name
+        cname = cname.replace(" ", "")
+        if(email_domain == cname):
+          is_corp_cust = True
+          break
+      customer.cust_type = 'C' if is_corp_cust else 'I'
       user = form1.save()
       customer.user = user
       customer.save()

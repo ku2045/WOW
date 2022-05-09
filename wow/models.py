@@ -55,7 +55,9 @@ class RrskCorporation(models.Model):
 
 class RrskCustomers(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, blank=True, null=True)
-    # cust_email = models.CharField(max_length=64, blank=True, null=True)
+    # print(User.email)
+    # cust_email = models.TextField(blank=True, null=True)
+    # print(user,cust_email)
     cust_phone_no = models.BigIntegerField(blank=True, null=True)
     cust_type = models.CharField(max_length=1, default='I', blank=True, null=True)
     cust_country = models.CharField(max_length=32, blank=True, null=True)
@@ -68,7 +70,9 @@ class RrskCustomers(models.Model):
     cust_lname = models.CharField(max_length=32, blank=True, null=True)
 
     def save(self, *args, **kwargs):
+        print("hello there",self, self.cust_type)
         super().save(*args, **kwargs)  # Call the "real" save() method.
+    
         if (self.cust_type == 'I') and not IndCustomer.objects.filter(cust=self):
             discounts = RrskDiscount.objects.all()
             cust = IndCustomer(

@@ -8,8 +8,9 @@ from .models import *
 class CustomerForm(ModelForm):
   class Meta:
     model = RrskCustomers
-    fields = ['cust_fname','cust_lname','cust_phone_no','cust_country','cust_state','cust_city','cust_street','cust_no','cust_zip']
-    exclude = ['user']
+    fields = ['cust_fname','cust_type','cust_lname','cust_phone_no','cust_country','cust_state','cust_city','cust_street','cust_no','cust_zip']
+    exclude = ['user','cust_type']
+
 
 class OrderForm(ModelForm):
   class Meta:
