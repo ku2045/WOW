@@ -200,7 +200,10 @@ def payOrder(request,pk,custid):
     else:
       discrate=(discrate_query[0].disc_rate)*100
   elif custtype=="C":
-    discrate_query=RrskDiscount.objects.raw('select co.id,co.corp_discount from rrsk_customers c join corp_customer cc on c.id=cc.cust_id join rrsk_corporation co on cc.corp_id=co.id where c.id=%s', [custid])
+    corpid_query=RrskDiscount.objects.raw('select cc.id,cc.corp_id from rrsk_customers c join corp_customer cc on c.id=cc.cust_id where c.id=%s', [custid])
+    corpid=corpid_query[0].corp_id
+    print(corpid)
+    discrate_query=RrskDiscount.objects.raw('select id,corp_discount from rrsk_corporation where id=%s', [corpid])
     discrate=(discrate_query[0].corp_discount)*100
   discrate=round(discrate,2)
   order = RrskInvoice.objects.get(id=pk)
