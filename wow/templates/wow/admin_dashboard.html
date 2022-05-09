@@ -2,30 +2,32 @@
 
 {% block content %}
 
-{%  include 'wow/status.html' %}
+{%  include 'wow/adminstatus.html' %}
 
 <br>
 
 <div class="row">
 	<div class="col-md-6" style="color:white">
-		<h5>Past Orders</h5>
+		<h5>Vehicle Inventory</h5>
 		<hr>
 		<div class="card card-body">
 			<table class="table table-sm">
 				<tr>
-					<th></th>
-					<th>Date</th>
-					<th>Amount</th>
+					<th>ID</th>
+					<th>VIN</th>
+					<th>Make</th>
+					<th>Model</th>
+					<th>License Plate</th>
+					<th>Vehicle Class</th>
 				</tr>
-				{% for items in past_orders %}
+				{% for vehicle in vehicles %}
 					<tr>
-						{% if items.id not in pays %}
-						<td><a class="btn btn-sm btn-info" href="{% url 'pay_order' items.id id %}">Pay</a></td>
-						{% else %}
-						<td> Paid!</td>
-						{% endif %}
-						<td>{{items.invoice_date}}</td>
-						<td> &dollar; {{items.invoice_amount}}</td>
+						<td>{{vehicle.vid}}</td>
+						<td>{{vehicle.vin}}</td>
+						<td>{{vehicle.vmake}}</td>
+						<td>{{vehicle.vmodel}}</td>
+						<td>{{vehicle.licenseplateno}}</td>
+						<td>{{vehicle.classname}}</td>
 					</tr>
 				{% endfor %}
 

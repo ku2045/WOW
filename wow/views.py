@@ -374,17 +374,18 @@ def generate_rentals(pickup_date = None, dropoff_date = None, v=None, num=400):
 
 def adminDashboard(request, pk_test):
   # vehicles, rental loc, invoices paid
-    vehicles = random.choices(RrskVehicleClass.objects.raw('SELECT a.id, b.id as vid, b.v_make, b.v_model, a.class_name, a.daily_rate, a.daily_mileage_limit, a.over_mileage_fee FROM rrsk_vehicle_class a JOIN rrsk_vehicle b ON a.id = b.v_class_id'),k=30)
+    vehicles = random.choices(RrskVehicleClass.objects.raw('SELECT a.id, b.id as vid, b.vin as vin, b.v_make as vmake, b.v_model as vmodel, b.liscence_plate_no as licenseplateno, a.class_name as classname  FROM rrsk_vehicle_class a JOIN rrsk_vehicle b ON a.id = b.v_class_id'),k=30)
     rentalLoc = RrskLocation.objects.raw('SELECT * FROM `rrsk_location`')
     invList = RrskInvoice.objects.raw('SELECT * FROM `rrsk_invoice`')
+    print(vehicles)
     pk_test = int(pk_test)
-    print(pk_test)
+    
     past_orders = RrskRental.objects.filter(cust=pk_test,
                                             end_odometer__isnull=False)  # .filter(dropoff_date__lte = datetime.date(2020, 12, 17))
     if len(past_orders) > 0:
         past_orders = RrskInvoice.objects.filter(rental__cust__id=pk_test)  #
         # past_orders.refresh_from_db()
-    print(past_orders)
+    
     pays = []
     lp = RrskInvoicePayment.objects.all()
     for it in lp:
@@ -394,7 +395,7 @@ def adminDashboard(request, pk_test):
     pay_paid = RrskInvoicePayment.objects.filter(invoice_no_id__rental__cust__id=pk_test)
     delivered = len(past_orders)
     curr_orders = RrskRental.objects.filter(cust=pk_test, end_odometer__isnull=True)
-    print(curr_orders)
+    
     pending = len(curr_orders)
     total_orders = delivered + pending
     payment_pending = len(pay_pending)
