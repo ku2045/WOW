@@ -453,6 +453,19 @@ def deleteVehicle(request, pk):
   context = {'vehicle':vehicle}
   return render(request, 'wow/delete_vehicle.html', context)
 
+def createRentalVehicle(request):
+  #vehicle = RrskVehicle.objects.get(id=pk)
+  form = CreateVehicleForm()
+  if request.method == "POST":
+    form = CreateVehicleForm(request.POST)
+    if form.is_valid():
+      form.save()
+      return redirect('/admindashboard/')
+
+  context = {'form':form}
+  return render(request, 'wow/rental_vehicle_create_form.html', context)
+
+
 def generate_all(request):
   generate_corporations()
   generate_discounts()

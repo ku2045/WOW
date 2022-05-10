@@ -44,3 +44,8 @@ class UpdateVehicleForm(ModelForm):
     model = RrskVehicle
     fields = ["vin","v_make","v_model","liscence_plate_no","loc","v_class"]
     exclude = ['available']
+class CreateVehicleForm(ModelForm):
+  class Meta:
+    model = RrskVehicle
+    fields = ['vin', 'v_make', 'v_model', 'liscence_plate_no', 'available', 'v_class', 'loc']
+    exclude = ['available']
