@@ -28,6 +28,8 @@
 						<td>{{vehicle.vmodel}}</td>
 						<td>{{vehicle.licenseplateno}}</td>
 						<td>{{vehicle.classname}}</td>
+						<td><a class="btn btn-sm btn-info" href="{% url 'update_vehicle' vehicle.vid %}">Update</a></td>
+						<td><a class="btn btn-sm btn-danger" href="{% url 'delete_vehicle' vehicle.vid %}">Delete</a></td>
 					</tr>
 				{% endfor %}
 
@@ -44,7 +46,7 @@
 
 			<hr>
 			<div class="card card-body">
-				<!-- book ride btn was here -->
+
 				<table class="table table-sm">
 					<tr>
 						<th>Street</th>

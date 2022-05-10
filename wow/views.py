@@ -1,3 +1,4 @@
+from asyncio.windows_events import NULL
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.forms import inlineformset_factory
@@ -322,8 +323,8 @@ def generate_vehicle_classes(num=5):
     vclass.save()
 
 
-def generate_vehicles(num=70):
-  models = ['Land Cruiser', 'Impala', 'Bronco', '911 Carrera', 'MX-5', 'Golf', 'F430 Italia', 'Camry', 'Tahoe', 'Expedition', 'Cayenne', 'CX-30', 'Jetta', 'Enzo', 'Tacoma', 'Camaro']
+def generate_vehicles(num=20):
+  models = ['RAV4', 'Impala', 'Bronco', '911', 'MX-5', 'Golf', 'F430', 'Camry', 'Tahoe', 'Expedition', 'Cayenne', 'CX-30', 'Jetta', 'Enzo', 'Tacoma', 'Camaro']
   makes = ['Toyota', 'Chevrolet', 'Ford', 'Porsche', 'Mazda', 'Volkswagen', 'Ferarri']
   classes = RrskVehicleClass.objects.all()
   locations = RrskLocation.objects.all()
@@ -340,10 +341,7 @@ def generate_vehicles(num=70):
 
 
 
-
-
-
-def generate_rentals(pickup_date = None, dropoff_date = None, v=None, num=400):
+def generate_rentals(pickup_date = None, dropoff_date = None, v=None, num=100):
   if pickup_date is None and dropoff_date is None and v is None:
     for i in range(num):
       dropoff_location = random.choice(RrskLocation.objects.all())
@@ -409,8 +407,7 @@ def adminDashboard(request):
     total_cars = len(rental_cars)
     total_locations = len(rental_locations)
     total_invoices = len(rental_invoices)
-    context = { "vehicles":vehicles,
-"rentalLoc":rentalLoc,"invList":invList, 'total_cars': total_cars, 'total_locations': total_locations,  'total_invoices': total_invoices }
+    context = { "vehicles":vehicles, "rentalLoc":rentalLoc,"invList":invList, 'total_cars': total_cars, 'total_locations': total_locations,  'total_invoices': total_invoices }
     #context = {'past_orders': past_orders, 'curr_orders': curr_orders, 'total_orders': total_orders,
     #'delivered': delivered, 'pending': pending, 'id': pk_test, 'pays': pays
      #}
@@ -429,6 +426,32 @@ def createRentalLoc(request):
   context = {'form':form}
   return render(request, 'wow/rental_loc_create_form.html', context)
 
+@login_required(login_url = 'login')
+def updateVehicle(request, pk):
+  vehicle = RrskVehicle.objects.get(id=pk)
+  form = UpdateVehicleForm(instance=vehicle)
+  
+  if request.method == 'POST':
+
+    form = UpdateVehicleForm(request.POST, instance=vehicle)
+    if form.is_valid():
+      form.save()
+      return redirect('/admindashboard/')
+
+  context = {'form':form}
+  return render(request, 'wow/update_vehicle.html', context)
+
+@login_required(login_url = 'login')
+def deleteVehicle(request, pk):
+  vehicle = RrskVehicle.objects.get(id=pk)
+  if request.method == "POST":
+    # vehicle.v_class_id=NULL
+    # vehicle.save()
+    vehicle.delete()
+    return redirect('/admindashboard/')
+
+  context = {'vehicle':vehicle}
+  return render(request, 'wow/delete_vehicle.html', context)
 
 def generate_all(request):
   generate_corporations()
