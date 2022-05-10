@@ -73,6 +73,13 @@
    			width: 100%;
    			color: white;
    			text-align: right;
+   		}
+
+		#messages{
+			background-color: grey;
+			color: #fff;
+			padding: 10px;
+			margin-top: 10px;
 		}
 	</style>
 
@@ -177,6 +184,9 @@
 				</div>
 
 				{{form.errors}}
+				{% for message in messages %}
+					<p id="messages">{{message}}</p>
+				{% endfor %}
 				
 				<div class="mt-4">
 					<div class="d-flex justify-content-center links">
