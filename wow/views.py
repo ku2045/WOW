@@ -401,7 +401,16 @@ def adminDashboard(request):
     # payment_pending = len(pay_pending)
     # payment_paid = len(pay_paid)
     # payment_due = payment_pending - payment_paid
-    context = {"vehicles":vehicles,"rentalLoc":rentalLoc,"invList":invList }
+
+    rental_cars = RrskVehicle.objects.filter(id__isnull=False)
+    rental_locations = RrskLocation.objects.filter(id__isnull=False)
+    rental_invoices = RrskInvoice.objects.filter(id__isnull=False)
+
+    total_cars = len(rental_cars)
+    total_locations = len(rental_locations)
+    total_invoices = len(rental_invoices)
+    context = { "vehicles":vehicles,
+"rentalLoc":rentalLoc,"invList":invList, 'total_cars': total_cars, 'total_locations': total_locations,  'total_invoices': total_invoices }
     #context = {'past_orders': past_orders, 'curr_orders': curr_orders, 'total_orders': total_orders,
     #'delivered': delivered, 'pending': pending, 'id': pk_test, 'pays': pays
      #}
