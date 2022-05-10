@@ -19,8 +19,18 @@
 <div class="text-center">
 	<div class="card align-items-center">
 		<div class="card card-body" style="width: 18rem;">
+			{% if request.user.is_authenticated and request.user.username == 'admin' %}
+				<a class="btn btn-lg btn-info" href="/admindashboard/">View Dashboard</a> <br>
+			{% endif %}
+			{% if request.user.is_authenticated and request.user.username != 'admin' %}
+				<a class="btn btn-lg btn-info" href="{% url 'login' %}">My account</a> <br>
+			{% endif %}
+					
+			{% if not request.user.is_authenticated %}
 				<a class="btn btn-lg btn-info" href="{% url 'login' %}">Login</a> <br>
 				<a class="btn btn-lg btn-info" href="{% url 'register' %}">Register</a> <br>
+			{% endif %}
+
 		</div>
 	</div>
 </div>
