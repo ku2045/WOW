@@ -1,4 +1,5 @@
 from asyncio.windows_events import NULL
+from email import message
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.forms import inlineformset_factory
@@ -72,7 +73,6 @@ def registerPage(request):
   if request.method == 'POST':
     form1 = CreateUserForm(request.POST)
     form = CustomerForm(request.POST)
-    
     form.id = id
     if form.is_valid() and form1.is_valid():
       customer = form.save()
@@ -104,6 +104,9 @@ def registerPage(request):
       messages.success(request, 'Account was created for ' + user_name)
 
       return redirect('login')
+    elif form1.errors:
+      error_string = ' '.join([' '.join(x for x in l) for l in list(form1.errors.values())])
+      messages.info(request,error_string)
 
 
   context = {'form':form, 'form1': form1}
@@ -328,7 +331,7 @@ def generate_vehicles(num=20):
   makes = ['Toyota', 'Chevrolet', 'Ford', 'Porsche', 'Mazda', 'Volkswagen', 'Ferarri']
   classes = RrskVehicleClass.objects.all()
   locations = RrskLocation.objects.all()
-  for i in range(70):
+  for i in range(20):
     v = RrskVehicle(
       vin = str(random.randint(1,10000)),
       v_make = random.choice(makes),
