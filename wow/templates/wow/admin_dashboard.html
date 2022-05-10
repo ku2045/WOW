@@ -1,6 +1,16 @@
 {%  extends 'wow/main.html' %}
 
 {% block content %}
+<style>
+.adminheading{
+   color: white;
+   text-align: center;
+}
+</style>
+
+<div class="adminheading" style="text-align: center">
+	<h2>WORLD ON WHEELS ADMIN PORTAL</h2>
+</div>
 
 {%  include 'wow/adminstatus.html' %}
 
@@ -10,7 +20,7 @@
 	<div class="col-md-6" style="color:white">
 		<div id="heading_action">
 			<h5>Vehicle Inventory</h5>
-			<a class="btn btn-sm btn-info" href="/create_vehicle/">Add Vehicle</a>
+			<a class="btn btn-lg btn-info" href="/create_vehicle/">Add Vehicle</a>
 		</div>
 
 		<hr>
@@ -45,7 +55,7 @@
 		<div class="row-md-6" style="color:white">
 			<div id="heading_action">
 				<h5>Rental Locations</h5> 
-				<a class="btn btn-sm btn-info" href="/create_loc/">Add Location</a>
+				<a class="btn btn-lg btn-info" href="/create_loc/">Add Location</a>
 			</div>
 
 			<hr>
@@ -57,7 +67,7 @@
 						<th>City</th>
 						<th>State</th>
 						<th>Zip</th>
-						<th>Phone number</th>
+						<th>Phone Number</th>
 					</tr>
 
 					{% for loc in rentalLoc %}
@@ -74,16 +84,16 @@
 			</div>
 		</div>
 		<div class="row-md-6" id="invwrapper" style="color:white">	
-			<h5>Invoices generated</h5>
+			<h5>Invoices Generated</h5>
 			<hr>
 			<div class="card card-body">
 				<!-- book ride btn was here -->
 				<table class="table table-sm">
 					<tr>
-						<th>Invoice id</th>
+						<th>Invoice ID</th>
 						<th>Date</th>
 						<th>Amount</th>
-						<th>rental id</th>
+						<th>Rental ID</th>
 					</tr>
 
 					{% for inv in invList %}

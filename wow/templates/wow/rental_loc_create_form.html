@@ -5,12 +5,13 @@
 <!-- "loc_phone_no","loc_email","loc_country","loc_state","loc_city","loc_street","loc_no","loc_zip" -->
 <div class="row">
 	<div class="col-md-6">
+		<H2 style="color: white;">ADD RENTAL LOCATION FORM</H2>
 		<div class="card card-body">
 
 			<form action="" method="POST">
 				{% csrf_token %}
 				<!-- {{ form.management_form }} -->
-				<div class="input-group mb-3"> Street: &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;{{form.loc_street}} </div>
+				<div class="input-group mb-3"> Street &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;{{form.loc_street}} </div>
 				<hr>
 				<div class="input-group mb-3"> City &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp;&nbsp;  &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{form.loc_city}} </div>
 				<hr>
@@ -18,11 +19,11 @@
 				<hr>
 				<div class="input-group mb-3"> Zipcode &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;{{form.loc_zip}} </div>
 				<hr>
-				<div class="input-group mb-3"> email &nbsp; &nbsp;  &nbsp;  &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; {{form.loc_email}} </div>
+				<div class="input-group mb-3"> Email &nbsp; &nbsp;  &nbsp;  &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; {{form.loc_email}} </div>
 				<hr>
-				<div class="input-group mb-3"> Phone number &nbsp; &nbsp; &nbsp; {{form.loc_phone_no}} </div>
+				<div class="input-group mb-3"> Phone Number &nbsp; &nbsp; &nbsp; {{form.loc_phone_no}} </div>
 				<hr>
-				<div class="input-group mb-3"> location number &nbsp; &nbsp; {{form.loc_no}} </div>
+				<div class="input-group mb-3"> Location Number &nbsp; &nbsp; {{form.loc_no}} </div>
 				<hr>  	
 
 <!-- 				{% for field in form %}

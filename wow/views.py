@@ -372,7 +372,7 @@ def generate_rentals(pickup_date = None, dropoff_date = None, v=None, num=100):
 
 def adminDashboard(request):
   # vehicles, rental loc, invoices paid
-    vehicles = random.choices(RrskVehicleClass.objects.raw('SELECT a.id, b.id as vid, b.vin as vin, b.v_make as vmake, b.v_model as vmodel, b.liscence_plate_no as licenseplateno, a.class_name as classname  FROM rrsk_vehicle_class a JOIN rrsk_vehicle b ON a.id = b.v_class_id'),k=30)
+    vehicles = RrskVehicleClass.objects.raw('SELECT a.id, b.id as vid, b.vin as vin, b.v_make as vmake, b.v_model as vmodel, b.liscence_plate_no as licenseplateno, a.class_name as classname  FROM rrsk_vehicle_class a JOIN rrsk_vehicle b ON a.id = b.v_class_id')
     rentalLoc = RrskLocation.objects.raw('SELECT * FROM `rrsk_location`')
     invList = RrskInvoice.objects.raw('SELECT * FROM `rrsk_invoice`')
     print(vehicles)
