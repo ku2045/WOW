@@ -32,3 +32,9 @@ class PayForm(ModelForm):
   class Meta:
     model = RrskInvoicePayment
     fields = ['pay_amount','pay_date','pay_method','card_no',]
+
+class CreateLocForm(ModelForm):
+  class Meta:
+    model = RrskLocation
+    fields = ["loc_phone_no","loc_email","loc_country","loc_state","loc_city","loc_street","loc_no","loc_zip"]
+    exclude = ['loc_country']

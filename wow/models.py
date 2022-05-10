@@ -126,7 +126,7 @@ class RrskLocation(models.Model):
     loc_state = models.CharField(max_length=32)
     loc_city = models.CharField(max_length=32)
     loc_street = models.CharField(max_length=64)
-    loc_no = models.CharField(max_length=32)
+    loc_no = models.CharField(max_length=32,null=True)
     loc_zip = models.IntegerField()
 
     class Meta:

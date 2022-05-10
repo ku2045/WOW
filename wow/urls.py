@@ -13,7 +13,7 @@ urlpatterns = [
         path('logout/', views.logoutUser, name="logout"),
         path('register/', views.registerPage, name="register"),
         path('dashboard/<str:pk_test>/', views.dashboard, name="dashboard"),
-        path('admindashboard/<str:pk_test>/', views.adminDashboard, name="admin_dashboard"),
+        path('admindashboard/', views.adminDashboard, name="admin_dashboard"),
         path('create_order/<str:pk>/<str:vid>/', views.createOrder, name="create_order"),
         path('update_order/<str:pk>/', views.updateOrder, name="update_order"),
         path('delete_order/<str:pk>/', views.deleteOrder, name="delete_order"),
@@ -22,6 +22,7 @@ urlpatterns = [
         path('reset_password_sent/', auth_views.PasswordResetDoneView.as_view(template_name="wow/password_reset_sent.html"), name="password_reset_done"),
         path('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(template_name="wow/password_reset_form.html"), name="password_reset_confirm"),
         path('reset_password_complete/', auth_views.PasswordResetCompleteView.as_view(template_name="wow/password_reset_done.html"), name="password_reset_complete"),
+        path('create_loc/',views.createRentalLoc,name="createRentalLoc")
 
 ]
 

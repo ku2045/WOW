@@ -37,12 +37,14 @@
 
 	<div class="col-md-6" style="color:white">
 		<div class="row-md-6" style="color:white">
-			
-			<h5>Rental Locations</h5>
+			<div id="heading_action">
+				<h5>Rental Locations</h5> 
+				<a class="btn btn-sm btn-info" href="/create_loc/">Add</a>
+			</div>
+
 			<hr>
 			<div class="card card-body">
 				<!-- book ride btn was here -->
-				<!-- <a class="btn btn-primary  btn-sm btn-block" href="{% url 'cars' id %}">View Rental Cars</a> -->
 				<table class="table table-sm">
 					<tr>
 						<th>Street</th>
@@ -58,7 +60,7 @@
 							<td>{{loc.loc_city}}</td>
 							<td>{{loc.loc_state}}</td>
 							<td>{{loc.loc_zip}}</td>
-							<td>{{loc.loc_phone_no}}</td>		
+							<td>{{loc.loc_phone_no}}</td>	
 						</tr>
 					{% endfor %}
 			
@@ -96,9 +98,3 @@
 </div>
 
 {% endblock %}
-
-<!-- {% if not order.end_odometer %}
-							<td><a class="btn btn-sm btn-info" href="{% url 'update_order' order.id %}">Update</a></td>
-							<td><a class="btn btn-sm btn-danger" href="{% url 'delete_order' order.id %}">Delete</a></td>
-							{% endif %} -->
-<!-- <a class="btn btn-primary  btn-sm btn-block" href="{% url 'create_order' id %}">Book a Ride</a> -->

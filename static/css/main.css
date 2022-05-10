@@ -12,7 +12,10 @@
         background-color: #4cc7bc;
 	}
 
-
+	#heading_action{
+		display: flex;
+	    justify-content: space-between;
+	}
 	#orders-delivered{
 		background-color: #b67acc;
 	}
@@ -28,4 +31,5 @@
 	#invwrapper {
 		margin-top: 2rem;
 	}
-	 
+
+	

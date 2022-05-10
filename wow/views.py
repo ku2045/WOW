@@ -52,7 +52,7 @@ def loginPage(request):
       login(request, user)
       
       if(username == "admin"):
-        return redirect('/admindashboard/'+str(us.id))
+        return redirect('/admindashboard/')
 
       return redirect('/dashboard/' + str(us.id))
     else:
@@ -372,43 +372,54 @@ def generate_rentals(pickup_date = None, dropoff_date = None, v=None, num=400):
       rental.save()
 
 
-def adminDashboard(request, pk_test):
+def adminDashboard(request):
   # vehicles, rental loc, invoices paid
     vehicles = random.choices(RrskVehicleClass.objects.raw('SELECT a.id, b.id as vid, b.vin as vin, b.v_make as vmake, b.v_model as vmodel, b.liscence_plate_no as licenseplateno, a.class_name as classname  FROM rrsk_vehicle_class a JOIN rrsk_vehicle b ON a.id = b.v_class_id'),k=30)
     rentalLoc = RrskLocation.objects.raw('SELECT * FROM `rrsk_location`')
     invList = RrskInvoice.objects.raw('SELECT * FROM `rrsk_invoice`')
     print(vehicles)
-    pk_test = int(pk_test)
+    # pk_test = int(pk_test)
     
-    past_orders = RrskRental.objects.filter(cust=pk_test,
-                                            end_odometer__isnull=False)  # .filter(dropoff_date__lte = datetime.date(2020, 12, 17))
-    if len(past_orders) > 0:
-        past_orders = RrskInvoice.objects.filter(rental__cust__id=pk_test)  #
-        # past_orders.refresh_from_db()
+    # past_orders = RrskRental.objects.filter(cust=pk_test,
+    #                                         end_odometer__isnull=False)  # .filter(dropoff_date__lte = datetime.date(2020, 12, 17))
+    # if len(past_orders) > 0:
+    #     past_orders = RrskInvoice.objects.filter(rental__cust__id=pk_test)  #
+    #     # past_orders.refresh_from_db()
     
-    pays = []
-    lp = RrskInvoicePayment.objects.all()
-    for it in lp:
-        print(it.invoice_no.id)
-        pays.append(int(it.invoice_no.id))
-    pay_pending = RrskInvoice.objects.filter(rental__cust__id=pk_test, id__isnull=False)
-    pay_paid = RrskInvoicePayment.objects.filter(invoice_no_id__rental__cust__id=pk_test)
-    delivered = len(past_orders)
-    curr_orders = RrskRental.objects.filter(cust=pk_test, end_odometer__isnull=True)
+    # pays = []
+    # lp = RrskInvoicePayment.objects.all()
+    # for it in lp:
+    #     print(it.invoice_no.id)
+    #     pays.append(int(it.invoice_no.id))
+    # pay_pending = RrskInvoice.objects.filter(rental__cust__id=pk_test, id__isnull=False)
+    # pay_paid = RrskInvoicePayment.objects.filter(invoice_no_id__rental__cust__id=pk_test)
+    # delivered = len(past_orders)
+    # curr_orders = RrskRental.objects.filter(cust=pk_test, end_odometer__isnull=True)
     
-    pending = len(curr_orders)
-    total_orders = delivered + pending
-    payment_pending = len(pay_pending)
-    payment_paid = len(pay_paid)
-    payment_due = payment_pending - payment_paid
-    context = {'past_orders': past_orders, 'curr_orders': curr_orders, 'total_orders': total_orders,
-               'delivered': delivered, 'pending': pending, 'id': pk_test, 'pays': pays,
-               'payment_pending': payment_pending, 'payment_paid':payment_paid, 'payment_due': payment_due , "vehicles":vehicles,
-"rentalLoc":rentalLoc,"invList":invList }
+    # pending = len(curr_orders)
+    # total_orders = delivered + pending
+    # payment_pending = len(pay_pending)
+    # payment_paid = len(pay_paid)
+    # payment_due = payment_pending - payment_paid
+    context = {"vehicles":vehicles,"rentalLoc":rentalLoc,"invList":invList }
     #context = {'past_orders': past_orders, 'curr_orders': curr_orders, 'total_orders': total_orders,
     #'delivered': delivered, 'pending': pending, 'id': pk_test, 'pays': pays
      #}
     return render(request, 'wow/admin_dashboard.html', context)
+
+  
+def createRentalLoc(request):
+  form = CreateLocForm()
+  if request.method == "POST":
+    form = CreateLocForm(request.POST)
+    loc = form.save()
+    loc.loc_country = 'USA'
+    loc.save()
+    return redirect('/admindashboard/')
+
+  context = {'form':form}
+  return render(request, 'wow/rental_loc_create_form.html', context)
+
 
 def generate_all(request):
   generate_corporations()
