@@ -38,3 +38,9 @@ class CreateLocForm(ModelForm):
     model = RrskLocation
     fields = ["loc_phone_no","loc_email","loc_country","loc_state","loc_city","loc_street","loc_no","loc_zip"]
     exclude = ['loc_country']
+
+class CreateVehicleForm(ModelForm):
+  class Meta:
+    model = RrskVehicle
+    fields = ['vin', 'v_make', 'v_model', 'liscence_plate_no', 'available', 'v_class', 'loc']
+    exclude = ['available']

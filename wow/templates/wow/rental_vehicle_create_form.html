@@ -1,0 +1,38 @@
+{%  extends 'wow/main.html' %}
+{% load static %}
+{% block content %}
+
+<!-- "v_make","v_model","vin","v_model","class_name","liscence_plate_no","daily_rate","daily_mileage_limit", "over_mileage_fee" -->
+<div class="row">
+	<div class="col-md-6">
+		<div class="card card-body">
+
+			<form action="" method="POST">
+				{% csrf_token %}
+				<!-- {{ form.management_form }} -->
+				<div class="input-group mb-3"> Manufacturer &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;{{form.v_make}} </div>
+				<hr>
+				<div class="input-group mb-3"> Model &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp;&nbsp;  &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{form.v_model}} </div>
+				<hr>
+				<div class="input-group mb-3"> VIN &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp;&nbsp;  &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{form.vin}} </div>
+				<hr>
+				<div class="input-group mb-3"> License Plate No &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;{{form.liscence_plate_no}} </div>
+				<hr>
+				<div class="input-group mb-3"> Class &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;{{form.v_class}} </div>
+				<hr>
+				<div class="input-group mb-3"> Location &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;{{form.loc}} </div>
+				<hr>
+
+<!-- 				{% for field in form %}
+					{{field}}
+					<hr>
+				{% endfor %} -->
+
+				<input type="submit" name="Submit" class="btn btn-primary  btn-sm btn-block">
+			</form>
+
+		</div>
+	</div>
+</div>
+
+{% endblock %}
