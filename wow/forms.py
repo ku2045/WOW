@@ -16,7 +16,7 @@ class OrderForm(ModelForm):
   def disable_field(self):
         self.fields['start_odometer'].widget.attrs['readonly'] = True
         self.fields['pickup_date'].widget.attrs['readonly'] = True
-        self.fields['pickup_location'].widget.attrs['disabled'] = True
+        self.fields['pickup_location']
   
   class Meta:
     model = RrskRental

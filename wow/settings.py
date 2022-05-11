@@ -79,7 +79,7 @@ WSGI_APPLICATION = 'own.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-    'NAME': 'saitest',
+    'NAME': 'pds_db',
     'USER': 'root',
     'PASSWORD': '',
     'HOST': 'localhost',
