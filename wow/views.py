@@ -175,6 +175,7 @@ def createOrder(request, pk , vid):
 def updateOrder(request, pk):
   order = RrskRental.objects.get(id=pk)
   form = OrderForm(instance=order)
+  form.disable_field() # call the method that will disable field.
   # print('ORDER:', order)
   if request.method == 'POST':
 
