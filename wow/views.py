@@ -112,7 +112,7 @@ def registerPage(request):
   context = {'form':form, 'form1': form1}
   return render(request, 'wow/register.html', context)
 
-
+@login_required(login_url = 'login')
 def dashboard(request, pk_test):
     pk_test = int(pk_test)
     print(pk_test)
@@ -372,7 +372,7 @@ def generate_rentals(pickup_date = None, dropoff_date = None, v=None, num=100):
                  )
       rental.save()
 
-
+@login_required(login_url = 'login')
 def adminDashboard(request):
   # vehicles, rental loc, invoices paid
     vehicles = RrskVehicleClass.objects.raw('SELECT a.id, b.id as vid, b.vin as vin, b.v_make as vmake, b.v_model as vmodel, b.liscence_plate_no as licenseplateno, a.class_name as classname  FROM rrsk_vehicle_class a JOIN rrsk_vehicle b ON a.id = b.v_class_id')
