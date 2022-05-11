@@ -10,17 +10,17 @@
 			<form action="" method="POST">
 				{% csrf_token %}
 				<!-- {{ form.management_form }} -->
-				<div class="input-group mb-3" >Car Model: &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp;<input type="text" name = "model" value={{vname}} readonly ></div>
+				<div class="input-group mb-3" >Car Model &nbsp;&nbsp;&nbsp; &nbsp;  &nbsp; &nbsp; &nbsp;<input type="text" name = "model" value={{vname}} readonly ></div>
 				<hr>
-				<div class="input-group mb-3">PickUp Date: &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp;{{form.pickup_date}} </div>
+				<div class="input-group mb-3">PickUp Date &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp;{{form.pickup_date}} </div>
 				<hr>
-				<div class="input-group mb-3"> Dropoff Date: &nbsp; &nbsp; &nbsp; &nbsp;{{form.dropoff_date}} </div>
+				<div class="input-group mb-3"> Dropoff Date &nbsp; &nbsp; &nbsp; &nbsp;{{form.dropoff_date}} </div>
 				<hr>
-				<div class="input-group mb-3"> PickUp Location: &nbsp; &nbsp; {{form.pickup_location}} </div>
+				<div class="input-group mb-3"> Pickup Location &nbsp; &nbsp;&nbsp; {{form.pickup_location}} </div>
 				<hr>
-				<div class="input-group mb-3"> Dropoff Location: &nbsp; {{form.dropoff_location}} </div>
+				<div class="input-group mb-3"> Dropoff Location &nbsp;&nbsp; {{form.dropoff_location}} </div>
 				<hr>
-				<div class="input-group mb-3"> Start Odometer: &nbsp; {{form.start_odometer}} </div>
+				<div class="input-group mb-3"> Start Odometer &nbsp; &nbsp;&nbsp;{{form.start_odometer}} </div>
 				<hr> 	
 
 <!-- 				{% for field in form %}
