@@ -17,7 +17,7 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='RrskCorporation',
+            name='SrkCorporation',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('corp_reg_no', models.CharField(max_length=32)),
@@ -25,12 +25,12 @@ class Migration(migrations.Migration):
                 ('corp_discount', models.DecimalField(blank=True, decimal_places=4, max_digits=4, null=True)),
             ],
             options={
-                'db_table': 'rrsk_corporation',
+                'db_table': 'srk_corporation',
                 'managed': True,
             },
         ),
         migrations.CreateModel(
-            name='RrskCustomers',
+            name='SrkCustomers',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('cust_email', models.CharField(blank=True, max_length=64, null=True)),
@@ -47,12 +47,12 @@ class Migration(migrations.Migration):
                 ('user', models.OneToOneField(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
             ],
             options={
-                'db_table': 'rrsk_customers',
+                'db_table': 'srk_customers',
                 'managed': True,
             },
         ),
         migrations.CreateModel(
-            name='RrskDiscount',
+            name='SrkDiscount',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('disc_rate', models.DecimalField(decimal_places=4, max_digits=4)),
@@ -60,24 +60,24 @@ class Migration(migrations.Migration):
                 ('disc_end_date', models.DateField()),
             ],
             options={
-                'db_table': 'rrsk_discount',
+                'db_table': 'srk_discount',
                 'managed': True,
             },
         ),
         migrations.CreateModel(
-            name='RrskInvoice',
+            name='SrkInvoice',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('invoice_date', models.DateField()),
                 ('invoice_amount', models.DecimalField(decimal_places=2, max_digits=9)),
             ],
             options={
-                'db_table': 'rrsk_invoice',
+                'db_table': 'srk_invoice',
                 'managed': True,
             },
         ),
         migrations.CreateModel(
-            name='RrskLocation',
+            name='SrkLocation',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('loc_phone_no', models.BigIntegerField()),
@@ -90,12 +90,12 @@ class Migration(migrations.Migration):
                 ('loc_zip', models.IntegerField()),
             ],
             options={
-                'db_table': 'rrsk_location',
+                'db_table': 'srk_location',
                 'managed': True,
             },
         ),
         migrations.CreateModel(
-            name='RrskVehicleClass',
+            name='SrkVehicleClass',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('class_name', models.CharField(max_length=32)),
@@ -104,12 +104,12 @@ class Migration(migrations.Migration):
                 ('over_mileage_fee', models.DecimalField(decimal_places=2, max_digits=5)),
             ],
             options={
-                'db_table': 'rrsk_vehicle_class',
+                'db_table': 'srk_vehicle_class',
                 'managed': True,
             },
         ),
         migrations.CreateModel(
-            name='RrskVehicle',
+            name='SrkVehicle',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('vin', models.CharField(max_length=17)),
@@ -117,17 +117,17 @@ class Migration(migrations.Migration):
                 ('v_model', models.CharField(max_length=32)),
                 ('liscence_plate_no', models.CharField(max_length=12)),
                 ('available', models.CharField(max_length=1)),
-                ('loc', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='wow.rrsklocation')),
-                ('v_class', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='wow.rrskvehicleclass')),
+                ('loc', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='wow.srklocation')),
+                ('v_class', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='wow.srkvehicleclass')),
             ],
             options={
-                'db_table': 'rrsk_vehicle',
+                'db_table': 'srk_vehicle',
                 'managed': True,
                 'unique_together': {('v_class', 'loc', 'id')},
             },
         ),
         migrations.CreateModel(
-            name='RrskRental',
+            name='SrkRental',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('pickup_date', models.DateField()),
@@ -135,37 +135,37 @@ class Migration(migrations.Migration):
                 ('start_odometer', models.DecimalField(blank=True, decimal_places=3, max_digits=9, null=True)),
                 ('end_odometer', models.DecimalField(blank=True, decimal_places=3, max_digits=9, null=True)),
                 ('unlimited_mileage', models.CharField(default='N', max_length=1)),
-                ('cust', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='wow.rrskcustomers')),
-                ('dropoff_location', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='rental_dropoff_location', to='wow.rrsklocation')),
-                ('loc', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='rental_vehicle_location', to='wow.rrskvehicle')),
-                ('pickup_location', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='rental_pickup_location', to='wow.rrsklocation')),
-                ('v', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='rental_vehicle_id', to='wow.rrskvehicle')),
-                ('v_class', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='rental_vehicle_class', to='wow.rrskvehicle')),
+                ('cust', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='wow.srkcustomers')),
+                ('dropoff_location', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='rental_dropoff_location', to='wow.srklocation')),
+                ('loc', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='rental_vehicle_location', to='wow.srkvehicle')),
+                ('pickup_location', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='rental_pickup_location', to='wow.srklocation')),
+                ('v', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='rental_vehicle_id', to='wow.srkvehicle')),
+                ('v_class', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='rental_vehicle_class', to='wow.srkvehicle')),
             ],
             options={
-                'db_table': 'rrsk_rental',
+                'db_table': 'srk_rental',
                 'managed': True,
             },
         ),
         migrations.CreateModel(
-            name='RrskInvoicePayment',
+            name='SrkInvoicePayment',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('pay_amount', models.DecimalField(decimal_places=2, max_digits=9)),
                 ('pay_date', models.DateField(default=datetime.datetime(2020, 12, 12, 4, 31, 12, 627290, tzinfo=utc))),
                 ('pay_method', models.CharField(choices=[('Credit Card', 'Credit Card'), ('Debit Card', 'Debit Card'), ('Gift Card', 'Gift Card')], default='Credit Card', max_length=16)),
                 ('card_no', models.DecimalField(decimal_places=0, max_digits=19)),
-                ('invoice_no', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='wow.rrskinvoice')),
+                ('invoice_no', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='wow.srkinvoice')),
             ],
             options={
-                'db_table': 'rrsk_invoice_payment',
+                'db_table': 'srk_invoice_payment',
                 'managed': True,
             },
         ),
         migrations.AddField(
-            model_name='rrskinvoice',
+            model_name='srkinvoice',
             name='rental',
-            field=models.OneToOneField(null=True, on_delete=django.db.models.deletion.SET_NULL, to='wow.rrskrental'),
+            field=models.OneToOneField(null=True, on_delete=django.db.models.deletion.SET_NULL, to='wow.srkrental'),
         ),
         migrations.CreateModel(
             name='IndCustomer',
@@ -174,8 +174,8 @@ class Migration(migrations.Migration):
                 ('driver_lisence_no', models.CharField(max_length=12)),
                 ('insurance_provider', models.CharField(max_length=64)),
                 ('insurance_policy_no', models.DecimalField(decimal_places=0, max_digits=32)),
-                ('cust', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to='wow.rrskcustomers')),
-                ('disc', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='wow.rrskdiscount')),
+                ('cust', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to='wow.srkcustomers')),
+                ('disc', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='wow.srkdiscount')),
             ],
             options={
                 'db_table': 'ind_customer',
@@ -187,8 +187,8 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('emp_id', models.DecimalField(decimal_places=0, max_digits=32)),
-                ('corp', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='wow.rrskcorporation')),
-                ('cust', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to='wow.rrskcustomers')),
+                ('corp', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='wow.srkcorporation')),
+                ('cust', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to='wow.srkcustomers')),
             ],
             options={
                 'db_table': 'corp_customer',

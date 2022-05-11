@@ -13,7 +13,7 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AlterField(
-            model_name='rrskinvoicepayment',
+            model_name='srkinvoicepayment',
             name='pay_date',
             field=models.DateField(default=datetime.datetime(2020, 12, 12, 4, 54, 45, 481456, tzinfo=utc)),
         ),

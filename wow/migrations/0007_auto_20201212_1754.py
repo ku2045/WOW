@@ -13,11 +13,11 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.RemoveField(
-            model_name='rrskcustomers',
+            model_name='srkcustomers',
             name='cust_email',
         ),
         migrations.AlterField(
-            model_name='rrskinvoicepayment',
+            model_name='srkinvoicepayment',
             name='pay_date',
             field=models.DateField(default=datetime.datetime(2020, 12, 12, 22, 54, 56, 706845, tzinfo=utc)),
         ),
